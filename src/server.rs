@@ -128,12 +128,10 @@ use crate::{ReferenceOr, ServerBinding};
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Server {
-    /// **REQUIRED.** A URL to the target host. This URL supports Server
-    /// Variables and MAY be relative, to indicate that the host location is
-    /// relative to the location where the AsyncAPI document is being served.
-    /// Variable substitutions will be made when a variable is named in
-    /// `{`brackets`}`.
-    pub url: String,
+    /// **REQUIRED.** A HOST string, **without** the protocol prefix, that
+    /// specifies the host location of an API. Value MUST be in the format of
+    /// a host name, a domain name, or an IP address.
+    pub host: String,
     /// **REQUIRED.** The protocol this URL supports for connection.
     /// Supported protocol include, but are not limited to:
     /// `amqp`, `amqps`, `http`, `https`, `ibmmq`, `jms`, `kafka`,
@@ -167,6 +165,11 @@ pub struct Server {
     /// [Specification Extensions](https://www.asyncapi.com/docs/specifications/v2.3.0#specificationExtensions).
     #[serde(flatten)]
     pub extensions: IndexMap<String, serde_json::Value>,
+    /// The pathname, **relative to the server URL**, that points to the
+    /// logical endpoint for this server. This MAY be an empty string, a
+    /// single forward slash (`/`) or a sequence of path segments separated
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pathname: Option<String>,
 }
 
 /// An object representing a Server Variable for server URL

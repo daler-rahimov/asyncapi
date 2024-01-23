@@ -1,7 +1,7 @@
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
-use crate::{Channel, Components, ExternalDocumentation, Info, ReferenceOr, Server, Tag};
+use crate::{Channel, Components, Info, ReferenceOr, Server};
 
 /// This is the root document object for the API specification.
 /// It combines resource listing and API declaration together into one document.
@@ -154,13 +154,6 @@ pub struct AsyncAPI {
     /// An element to hold various schemas for the specification.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub components: Option<Components>,
-    /// A list of tags used by the specification with additional metadata.
-    /// Each tag name in the list MUST be unique.
-    #[serde(default, skip_serializing_if = "Vec::is_empty")]
-    pub tags: Vec<Tag>,
-    /// Additional external documentation.
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub external_docs: Option<ExternalDocumentation>,
     /// This object can be extended with
     /// [Specification Extensions](https://www.asyncapi.com/docs/specifications/v2.3.0#specificationExtensions).
     #[serde(flatten)]

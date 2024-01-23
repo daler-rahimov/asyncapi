@@ -1,3 +1,4 @@
+use crate::{ExternalDocumentation, Tag};
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
@@ -61,6 +62,13 @@ pub struct Info {
     /// [Specification Extensions](https://www.asyncapi.com/docs/specifications/v2.3.0#specificationExtensions).
     #[serde(flatten)]
     pub extensions: IndexMap<String, serde_json::Value>,
+    /// A list of tags used by the specification with additional metadata.
+    /// Each tag name in the list MUST be unique.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub tags: Vec<Tag>,
+    /// Additional external documentation.
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub external_docs: Option<ExternalDocumentation>,
 }
 
 /// Contact information for the exposed API.
