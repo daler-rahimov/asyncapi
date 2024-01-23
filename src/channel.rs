@@ -82,7 +82,7 @@ use crate::{ChannelBinding, Message, Parameter, ReferenceOr};
 #[serde(rename_all = "camelCase")]
 pub struct Channel {
     /// TODO: add docs
-    pub messages: IndexMap<String, Option<OperationMessageType>>,
+    pub messages: IndexMap<String, OperationMessageType>,
     /// TODO: add docs
     /// TODO: check if this need to have it's own struct
     #[serde(skip_serializing_if = "Option::is_none")]

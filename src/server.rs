@@ -1,8 +1,14 @@
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
-use crate::{ReferenceOr, ServerBinding};
+use crate::{ReferenceOr, Schema, ServerBinding};
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
+#[serde(untagged)]
+pub enum SecurityType {
+    Schema(Schema),
+    Any(serde_json::Value),
+}
 /// An object representing a message broker, a server or any other kind of
 /// computer program capable of sending and/or receiving data. This object is
 /// used to capture details such as URIs, protocols and security configuration.
@@ -260,5 +266,5 @@ pub struct SecurityRequirement {
     /// needed, the list can be empty. For other security scheme types, the
     /// array MUST be empty.
     #[serde(flatten)]
-    pub values: IndexMap<String, Vec<String>>,
+    pub values: IndexMap<String, Vec<SecurityType>>,
 }

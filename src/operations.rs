@@ -1,10 +1,7 @@
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
-use crate::{
-    Channel, ExternalDocumentation, Message, OperationBinding, OperationTrait, ReferenceOr, Schema,
-    Tag,
-};
+use crate::{ExternalDocumentation, OperationBinding, OperationTrait, ReferenceOr, Schema, Tag};
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase")]
@@ -121,6 +118,7 @@ pub enum OperationChannelType {
 pub struct Operation {
     /// **Required** The type of operation. Can only be `send` or `receive`.
     pub action: ActionType,
+
     /// The message that will be sent or received.
     /// TODO: more docs
     #[serde(skip_serializing_if = "Option::is_none")]
