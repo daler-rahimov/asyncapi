@@ -1,7 +1,7 @@
 use indexmap::IndexMap;
 use serde::{Deserialize, Serialize};
 
-use crate::{Channel, Components, Info, ReferenceOr, Server};
+use crate::{Channel, Components, Info, Operation, ReferenceOr, Server};
 
 /// This is the root document object for the API specification.
 /// It combines resource listing and API declaration together into one document.
@@ -151,6 +151,8 @@ pub struct AsyncAPI {
     ///     $ref: "#/components/messages/userSignedUp"
     /// ```
     pub channels: IndexMap<String, Channel>,
+    /// **Required** All available operations.
+    pub operations: IndexMap<String, Operation>,
     /// An element to hold various schemas for the specification.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub components: Option<Components>,
