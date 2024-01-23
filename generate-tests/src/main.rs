@@ -4,42 +4,48 @@ use regex::Regex;
 use std::{
     env::var,
     ffi::OsStr,
-    fs::{read_dir, File},
+    fs::File,
+    // fs::{read_dir, File},
     io::{self, Write},
     path::Path,
     process::Command,
+    // process::{exit, Command},
 };
 
 fn main() -> io::Result<()> {
     let manifest_dir = var("CARGO_MANIFEST_DIR").unwrap();
     println!("{manifest_dir}");
     let curr_dir = Path::new(&manifest_dir);
+    // TODO: when asyncapi/tck gets new tests added for v3
     // tck tests
-    let tck_path = Path::new(curr_dir).join("..").join("fixtures").join("tck");
-    Command::new("git")
-        .arg("submodule")
-        .arg("update")
-        .arg("--init")
-        .current_dir(&tck_path)
-        .status()
-        .unwrap();
+    // let tck_path = Path::new(curr_dir).join("..").join("fixtures").join("tck");
+    // Command::new("git")
+    //     .arg("submodule")
+    //     .arg("update")
+    //     .arg("--init")
+    //     .current_dir(&tck_path)
+    //     .status()
+    //     .unwrap();
+    // println!("{:?}", curr_dir);
+    // let mut test_file = match File::create(curr_dir.join("..").join("tests").join("tck.rs")) {
+    //     Ok(file) => file,
+    //     Err(e) => {
+    //         panic!("Failed to create file: {}", e);
+    //     }
+    // };
 
-    let mut test_file = File::create(curr_dir.join("..").join("tests").join("tck.rs")).unwrap();
-
-    writeln!(
-        test_file,
-        "{}",
-        quote! {
-            use asyncapi::{AsyncAPI};
-        }
-        .to_string()
-    )
-    .unwrap();
+    // writeln!(
+    //     test_file,
+    //     "{}",
+    //     quote! {
+    //         use asyncapi::{AsyncAPI};
+    //     }
+    //     .to_string()
+    // )
+    // .unwrap();
+    // find_test(&tck_path.join("tests"), &mut test_file, &re).unwrap();
 
     let re = Regex::new(r"[^A-Za-z0-9]").unwrap();
-
-    find_test(&tck_path.join("tests"), &mut test_file, &re).unwrap();
-
     // spec examples
     let spec_path = Path::new(curr_dir).join("..").join("fixtures").join("spec");
     Command::new("git")
@@ -68,31 +74,31 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 
-fn find_test(dir: &Path, file: &mut File, ident_regex: &Regex) -> io::Result<()> {
-    if dir.is_dir() {
-        for entry in read_dir(dir)? {
-            let entry = entry?;
-            let path = entry.path();
-            if path.is_dir() {
-                find_test(&path, file, ident_regex)?;
-            } else {
-                let valid = if entry.file_name().to_string_lossy().starts_with("invalid") {
-                    false
-                } else if entry.file_name().to_string_lossy().starts_with("valid") {
-                    true
-                } else {
-                    continue;
-                };
-                let path_string = path.to_string_lossy();
+// fn find_test(dir: &Path, file: &mut File, ident_regex: &Regex) -> io::Result<()> {
+//     if dir.is_dir() {
+//         for entry in read_dir(dir)? {
+//             let entry = entry?;
+//             let path = entry.path();
+//             if path.is_dir() {
+//                 find_test(&path, file, ident_regex)?;
+//             } else {
+//                 let valid = if entry.file_name().to_string_lossy().starts_with("invalid") {
+//                     false
+//                 } else if entry.file_name().to_string_lossy().starts_with("valid") {
+//                     true
+//                 } else {
+//                     continue;
+//                 };
+//                 let path_string = path.to_string_lossy();
 
-                if valid {
-                    write_deserialize_test(&path_string, file, ident_regex)?;
-                }
-            }
-        }
-    }
-    Ok(())
-}
+//                 if valid {
+//                     write_deserialize_test(&path_string, file, ident_regex)?;
+//                 }
+//             }
+//         }
+//     }
+//     Ok(())
+// }
 
 fn find_spec_example(examples_dir: &Path, file: &mut File, ident_regex: &Regex) -> io::Result<()> {
     for entry in examples_dir.read_dir()? {
