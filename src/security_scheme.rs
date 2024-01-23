@@ -400,7 +400,7 @@ pub struct OAuthFlowImplicit {
     pub refresh_url: Option<String>,
     /// **REQUIRED**. The available scopes for the OAuth2 security scheme.
     /// A map between the scope name and a short description for it.
-    pub scopes: IndexMap<String, String>,
+    pub available_scopes: IndexMap<String, String>,
     /// This object MAY be extended with
     /// [Specification Extensions](https://www.asyncapi.com/docs/specifications/v2.3.0#specificationExtensions).
     #[serde(flatten)]
@@ -420,7 +420,7 @@ pub struct OAuthFlowPassword {
     pub refresh_url: Option<String>,
     /// **REQUIRED**. The available scopes for the OAuth2 security scheme.
     /// A map between the scope name and a short description for it.
-    pub scopes: IndexMap<String, String>,
+    pub available_scopes: IndexMap<String, String>,
     /// This object MAY be extended with
     /// [Specification Extensions](https://www.asyncapi.com/docs/specifications/v2.3.0#specificationExtensions).
     #[serde(flatten)]
@@ -440,7 +440,7 @@ pub struct OAuthFlowClientCredentials {
     pub refresh_url: Option<String>,
     /// **REQUIRED**. The available scopes for the OAuth2 security scheme.
     /// A map between the scope name and a short description for it.
-    pub scopes: IndexMap<String, String>,
+    pub available_scopes: IndexMap<String, String>,
     /// This object MAY be extended with
     /// [Specification Extensions](https://www.asyncapi.com/docs/specifications/v2.3.0#specificationExtensions).
     #[serde(flatten)]
@@ -463,7 +463,7 @@ pub struct OAuthFlowAuthorizationCode {
     pub refresh_url: Option<String>,
     /// **REQUIRED**. The available scopes for the OAuth2 security scheme.
     /// A map between the scope name and a short description for it.
-    pub scopes: IndexMap<String, String>,
+    pub available_scopes: IndexMap<String, String>,
     /// This object MAY be extended with
     /// [Specification Extensions](https://www.asyncapi.com/docs/specifications/v2.3.0#specificationExtensions).
     #[serde(flatten)]

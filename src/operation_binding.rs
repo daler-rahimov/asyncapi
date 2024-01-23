@@ -87,8 +87,9 @@ pub struct OperationBinding {
 #[serde(rename_all = "camelCase")]
 pub struct HTTPOperationBinding {
     /// Required. Type of operation. Its value MUST be either `request` or `response`.
+    #[serde(skip_serializing_if = "Option::is_none")]
     #[serde(rename = "type")]
-    pub typ: String,
+    pub typ: Option<String>,
     /// When `type` is `request`, this is the HTTP method, otherwise it MUST be ignored.
     /// Its value MUST be one of `GET`, `POST`, `PUT`, `PATCH`, `DELETE`, `HEAD`,
     /// `OPTIONS`, `CONNECT`, and `TRACE`.

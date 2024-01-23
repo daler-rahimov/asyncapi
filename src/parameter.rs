@@ -40,6 +40,7 @@ use crate::{ReferenceOr, Schema};
 #[derive(Debug, Clone, Serialize, Deserialize, Default, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct Parameter {
+    // TODO: Fix this according to the spec
     /// A verbose explanation of the parameter.
     /// [CommonMark syntax](https://spec.commonmark.org/)
     /// can be used for rich text representation.
