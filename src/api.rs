@@ -150,7 +150,8 @@ pub struct AsyncAPI {
     ///   subscribe:
     ///     $ref: "#/components/messages/userSignedUp"
     /// ```
-    pub channels: IndexMap<String, Channel>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub channels: Option<IndexMap<String, Channel>>,
     /// **Required** All available operations.
     pub operations: IndexMap<String, Operation>,
     /// An element to hold various schemas for the specification.

@@ -182,12 +182,14 @@ pub struct Message {
     /// Definition of the correlation ID used for message tracing or matching.
     #[serde(skip_serializing_if = "Option::is_none")]
     pub correlation_id: Option<ReferenceOr<CorrelationId>>,
-    /// A string containing the name of the schema
-    /// format/language used to define the message payload.
-    /// If omitted, implementations should parse the payload as a
-    /// [Schema object][crate::Schema].
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub schema_format: Option<String>,
+    // TODO: add schema_format to payload:
+    //  https://www.asyncapi.com/docs/migration/migrating-to-v3 > Schema format and schemas
+    // /// A string containing the name of the schema
+    // /// format/language used to define the message payload.
+    // /// If omitted, implementations should parse the payload as a
+    // /// [Schema object][crate::Schema].
+    // #[serde(skip_serializing_if = "Option::is_none")]
+    // pub schema_format: Option<String>,
     /// The content type to use when encoding/decoding a message's payload.
     /// The value MUST be a specific media type (e.g. application/json).
     /// When omitted, the value MUST be the one specified on the defaultContentType field.
